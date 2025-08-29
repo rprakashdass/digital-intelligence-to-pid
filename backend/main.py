@@ -167,7 +167,7 @@ async def run_analysis(type: str):
         if type == "validate":
             return {"issues": result.issues}
         elif type == "ocr":
-            return {"texts": [node.model_dump() for node in result.nodes if node.node_type == "text"]}
+            return {"texts": [text.model_dump() for text in result.texts]}
         elif type == "graph":
             return result
     else:
