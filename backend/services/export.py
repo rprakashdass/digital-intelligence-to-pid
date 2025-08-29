@@ -84,3 +84,4 @@ def to_csv(graph: Graph) -> dict:
         "nodes": nodes_df.to_csv(index=False),
         "edges": edges_df.to_csv(index=False)
     }
+    

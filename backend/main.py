@@ -111,7 +111,9 @@ async def analyze_image(request: AnalyzeRequest):
     texts = ocr.ocr_image(temp_file_path)
 
     # 2. Symbol Detection
-    detected_symbols = symbols.detect_symbols(temp_file_path)
+    detection_result = symbols.detect_symbols(temp_file_path)
+    detected_symbols = detection_result["nodes"]
+    symbol_issues = detection_result["issues"]
 
     # 3. Line and Junction Extraction
     line_edges, junction_nodes = lines.extract_lines_and_junctions(temp_file_path)
@@ -127,8 +129,11 @@ async def analyze_image(request: AnalyzeRequest):
                 node.attributes['parsed_tag'] = parsed_tag.model_dump()
 
     # 6. Validate the graph
-    final_issues = validate.validate_graph(initial_graph)
-    initial_graph.issues = final_issues
+    validation_issues = validate.validate_graph(initial_graph)
+    
+    # Combine symbol issues with validation issues
+    all_issues = symbol_issues + validation_issues
+    initial_graph.issues = all_issues
 
     return initial_graph
 

@@ -1,18 +1,32 @@
 # P&ID to Digital MVP
 
-This project is a minimal, working P&ID-to-digital converter built in one day as part of a hackathon. It uses a simple HTML/CSS/JS frontend and a Python FastAPI backend to perform OCR, symbol detection, and graph construction from a P&ID image.
+This project is a minimal, working P&ID-to-digital converter built as part of a hackathon. It uses a React frontend and a Python FastAPI backend to perform OCR, symbol detection, and graph construction from a P&ID image.
+
+This MVP is designed specifically for oil & gas and chemical process P&ID diagrams using ISA-5.1 core symbols. Expand the template set as needed for new diagrams.
 
 ## Features (MVP)
 
 - **Image Upload**: Upload a P&ID as a PNG or JPG.
 - **OCR**: Extracts text using `pytesseract`.
-- **Symbol Detection**: Simple template matching for a small set of symbols (pump, valves, instrument bubble).
+- **Symbol Detection**: Simple template matching for ISA-5.1 standard symbols (limited to pump, manual valve, control valve, instrument bubble, and tank/vessel).
 - **Line Extraction**: Detects straight lines using OpenCV.
 - **Graph Construction**: Builds a basic process graph of nodes and edges.
 - **ISA Tag Parsing**: Parses instrument tags like `FIC-101`.
-- **Issue Detection**: Flags potential problems like missing labels or dangling lines.
+- **Issue Detection**: Flags potential problems like missing labels, dangling lines, or unknown symbols.
 - **DEXPI-lite Export**: Exports the graph to a simplified JSON format.
 - **Simple UI**: View the original image, toggle overlays, and review extracted data.
+
+## Currently Supported Symbols
+
+The MVP focuses specifically on these ISA-5.1 standard symbols:
+
+1. Pump
+2. Manual valve
+3. Control valve
+4. Instrument bubble
+5. Tank/vessel
+
+All other shapes will be flagged as "Unknown Symbol" in the issues array for user review.
 
 ## Project Structure
 
@@ -95,7 +109,7 @@ This project is a minimal, working P&ID-to-digital converter built in one day as
 
 This is a hackathon MVP and has several limitations:
 
--   **Limited Symbol Library**: Only a few symbols are recognized.
+-   **Focused Symbol Library**: Only recognizes 5 core ISA-5.1 symbols (pump, manual valve, control valve, instrument bubble, tank/vessel).
 -   **Straight Lines Only**: Does not detect curved pipes.
 -   **Basic Text Association**: Associates text based on simple proximity, which can be inaccurate.
 -   **No CAD Import**: Only works with raster images.
@@ -108,3 +122,12 @@ This is a hackathon MVP and has several limitations:
 -   **DEXPI/ISO 15926 Mapping**: Create a proper mapping from detected symbols to standard industry classes.
 -   **Support for Curved Pipes**: Use contour detection or other CV techniques.
 -   **Interactive Correction**: Allow users to correct misidentifications in the UI.
+-   **Expanded Symbol Library**: Add support for more ISA-5.1 symbols beyond the initial set.
+
+## Test Resources
+
+For testing and extending this application, you can use publicly available P&ID diagrams and symbol libraries:
+
+1. ISA-5.1 Standard Symbol Libraries
+2. Sample P&ID diagrams from educational resources
+3. Open-source engineering diagrams (ensure proper licensing)
