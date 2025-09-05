@@ -16,7 +16,7 @@ sleep 3
 echo ""
 echo "3. Starting Frontend Server..."
 cd ../frontend
-npm run dev &
+pnpm run dev &
 FRONTEND_PID=$!
 
 echo ""
