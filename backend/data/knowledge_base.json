@@ -1,0 +1,190 @@
+{
+  "instrument_tags": {
+    "FIC": {
+      "description": "Flow Indicating Controller - Measures and controls flow rate",
+      "function": "Flow control loop with indication",
+      "typical_use": "Process flow regulation, feed control, product flow control",
+      "components": ["Flow transmitter", "Controller", "Control valve"],
+      "fault_modes": ["Flow measurement drift", "Valve sticking", "Controller tuning issues"]
+    },
+    "FIT": {
+      "description": "Flow Indicating Transmitter - Measures flow rate with indication",
+      "function": "Flow measurement and local indication",
+      "typical_use": "Flow monitoring, flow totalization, process monitoring",
+      "components": ["Flow sensor", "Transmitter", "Local indicator"],
+      "fault_modes": ["Sensor fouling", "Transmitter drift", "Display failure"]
+    },
+    "PIC": {
+      "description": "Pressure Indicating Controller - Measures and controls pressure",
+      "function": "Pressure control loop with indication",
+      "typical_use": "Vessel pressure control, line pressure regulation, safety pressure control",
+      "components": ["Pressure transmitter", "Controller", "Control valve"],
+      "fault_modes": ["Pressure sensor failure", "Valve actuator issues", "Controller malfunction"]
+    },
+    "PIT": {
+      "description": "Pressure Indicating Transmitter - Measures pressure with indication",
+      "function": "Pressure measurement and local indication",
+      "typical_use": "Pressure monitoring, safety systems, process control",
+      "components": ["Pressure sensor", "Transmitter", "Local indicator"],
+      "fault_modes": ["Sensor blockage", "Transmitter calibration drift", "Indicator failure"]
+    },
+    "TIC": {
+      "description": "Temperature Indicating Controller - Measures and controls temperature",
+      "function": "Temperature control loop with indication",
+      "typical_use": "Reactor temperature control, heat exchanger control, process temperature regulation",
+      "components": ["Temperature sensor", "Controller", "Heating/cooling element"],
+      "fault_modes": ["Sensor drift", "Thermal lag", "Controller tuning problems"]
+    },
+    "TIT": {
+      "description": "Temperature Indicating Transmitter - Measures temperature with indication",
+      "function": "Temperature measurement and local indication",
+      "typical_use": "Temperature monitoring, safety systems, process monitoring",
+      "components": ["Temperature sensor", "Transmitter", "Local indicator"],
+      "fault_modes": ["Sensor aging", "Transmitter drift", "Display malfunction"]
+    },
+    "LIC": {
+      "description": "Level Indicating Controller - Measures and controls liquid level",
+      "function": "Level control loop with indication",
+      "typical_use": "Tank level control, separator level control, surge tank control",
+      "components": ["Level transmitter", "Controller", "Control valve"],
+      "fault_modes": ["Level sensor fouling", "Valve sticking", "Controller instability"]
+    },
+    "LIT": {
+      "description": "Level Indicating Transmitter - Measures level with indication",
+      "function": "Level measurement and local indication",
+      "typical_use": "Level monitoring, safety systems, inventory management",
+      "components": ["Level sensor", "Transmitter", "Local indicator"],
+      "fault_modes": ["Sensor coating", "Transmitter drift", "Indicator failure"]
+    },
+    "PSV": {
+      "description": "Pressure Safety Valve - Protects equipment from overpressure",
+      "function": "Safety relief device",
+      "typical_use": "Vessel protection, line protection, equipment safety",
+      "components": ["Valve body", "Spring mechanism", "Seat"],
+      "fault_modes": ["Valve sticking", "Spring fatigue", "Seat leakage"]
+    },
+    "PCV": {
+      "description": "Pressure Control Valve - Controls pressure in process lines",
+      "function": "Pressure regulation",
+      "typical_use": "Line pressure control, backpressure control, pressure reduction",
+      "components": ["Valve body", "Actuator", "Controller"],
+      "fault_modes": ["Valve sticking", "Actuator failure", "Controller issues"]
+    }
+  },
+  "equipment": {
+    "pump": {
+      "description": "Centrifugal or positive displacement pump for fluid transfer",
+      "function": "Fluid transportation and pressure increase",
+      "typical_use": "Process fluid transfer, circulation, boosting",
+      "types": ["Centrifugal", "Positive displacement", "Gear", "Screw"],
+      "fault_modes": ["Cavitation", "Bearing failure", "Seal leakage", "Motor failure"]
+    },
+    "tank": {
+      "description": "Storage vessel for liquids or gases",
+      "function": "Storage, mixing, or separation",
+      "typical_use": "Product storage, buffer tanks, surge tanks, separators",
+      "types": ["Atmospheric", "Pressurized", "Vacuum", "Insulated"],
+      "fault_modes": ["Corrosion", "Overpressure", "Leakage", "Structural failure"]
+    },
+    "valve_manual": {
+      "description": "Manually operated valve for flow control",
+      "function": "Manual flow isolation or regulation",
+      "typical_use": "Isolation, throttling, maintenance isolation",
+      "types": ["Gate", "Globe", "Ball", "Butterfly"],
+      "fault_modes": ["Sticking", "Seat damage", "Packing leakage", "Handle failure"]
+    },
+    "valve_control": {
+      "description": "Automatically controlled valve for process control",
+      "function": "Automatic flow control based on process signals",
+      "typical_use": "Process control, flow regulation, pressure control",
+      "types": ["Globe", "Butterfly", "Ball", "Diaphragm"],
+      "fault_modes": ["Actuator failure", "Positioner drift", "Valve sticking", "Signal loss"]
+    },
+    "heat_exchanger": {
+      "description": "Equipment for heat transfer between fluids",
+      "function": "Heat exchange and temperature control",
+      "typical_use": "Process heating/cooling, heat recovery, temperature control",
+      "types": ["Shell and tube", "Plate", "Air cooler", "Double pipe"],
+      "fault_modes": ["Fouling", "Leakage", "Corrosion", "Thermal stress"]
+    },
+    "instrument_bubble": {
+      "description": "Instrumentation symbol representing measurement or control devices",
+      "function": "Process measurement, control, or indication",
+      "typical_use": "Process monitoring, control loops, safety systems",
+      "types": ["Transmitter", "Controller", "Indicator", "Switch"],
+      "fault_modes": ["Sensor drift", "Communication failure", "Power loss", "Calibration drift"]
+    }
+  },
+  "process_logic": {
+    "flow_control": {
+      "description": "Control system to maintain desired flow rate",
+      "components": ["Flow sensor", "Controller", "Control valve"],
+      "control_strategy": "Feedback control with flow measurement",
+      "tuning_parameters": ["Proportional gain", "Integral time", "Derivative time"],
+      "common_issues": ["Oscillation", "Slow response", "Steady-state error"]
+    },
+    "pressure_control": {
+      "description": "Control system to maintain desired pressure",
+      "components": ["Pressure sensor", "Controller", "Control valve"],
+      "control_strategy": "Feedback control with pressure measurement",
+      "tuning_parameters": ["Proportional gain", "Integral time", "Derivative time"],
+      "common_issues": ["Pressure spikes", "Slow response", "Valve hunting"]
+    },
+    "level_control": {
+      "description": "Control system to maintain desired liquid level",
+      "components": ["Level sensor", "Controller", "Control valve"],
+      "control_strategy": "Feedback control with level measurement",
+      "tuning_parameters": ["Proportional gain", "Integral time", "Derivative time"],
+      "common_issues": ["Level oscillation", "Overflow risk", "Empty tank risk"]
+    },
+    "temperature_control": {
+      "description": "Control system to maintain desired temperature",
+      "components": ["Temperature sensor", "Controller", "Heating/cooling element"],
+      "control_strategy": "Feedback control with temperature measurement",
+      "tuning_parameters": ["Proportional gain", "Integral time", "Derivative time"],
+      "common_issues": ["Temperature overshoot", "Slow response", "Thermal lag"]
+    }
+  },
+  "safety_systems": {
+    "pressure_relief": {
+      "description": "Safety system to prevent overpressure conditions",
+      "components": ["PSV", "Relief header", "Flare system"],
+      "function": "Protect equipment from overpressure",
+      "activation": "Automatic at set pressure",
+      "maintenance": "Regular testing and inspection required"
+    },
+    "emergency_shutdown": {
+      "description": "Safety system for emergency process shutdown",
+      "components": ["ESD valves", "Shutdown logic", "Alarm system"],
+      "function": "Safe process shutdown in emergency",
+      "activation": "Manual or automatic triggers",
+      "maintenance": "Regular testing and validation required"
+    }
+  },
+  "common_issues": {
+    "missing_tags": {
+      "description": "Equipment or instruments without proper identification tags",
+      "impact": "Safety risk, maintenance difficulty, operational confusion",
+      "solution": "Add proper ISA-5.1 compliant tags",
+      "prevention": "Design review, construction inspection"
+    },
+    "broken_lines": {
+      "description": "Disconnected or incomplete process lines",
+      "impact": "Process flow interruption, safety hazard",
+      "solution": "Complete line connections, verify process flow",
+      "prevention": "Design review, construction inspection"
+    },
+    "unknown_symbols": {
+      "description": "Unrecognized symbols not in standard library",
+      "impact": "Confusion, non-standard practices",
+      "solution": "Identify symbol, add to standard library",
+      "prevention": "Use standard ISA-5.1 symbols"
+    },
+    "low_confidence_detection": {
+      "description": "Symbols detected with low confidence scores",
+      "impact": "Potential misidentification, analysis uncertainty",
+      "solution": "Manual verification, improve detection parameters",
+      "prevention": "High-quality images, proper lighting"
+    }
+  }
+}

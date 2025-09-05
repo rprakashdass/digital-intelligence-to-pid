@@ -6,6 +6,17 @@ pytesseract
 pillow
 pydantic
 python-multipart
+pandas
+requests
+# YOLO dependencies
+torch
+torchvision
+ultralytics
+# RAG dependencies
+sentence-transformers
+openai
+# Optional: ONNX runtime for ONNX models
+# onnxruntime
 # Optional dependencies, uncomment to use
 # easyocr
 # PyMuPDF

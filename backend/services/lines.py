@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from typing import List, Tuple
-from ..models import Edge, Node, BoundingBox
+from backend.models import Edge, Node, BoundingBox
 
 def extract_lines_and_junctions(image_path: str) -> Tuple[List[Edge], List[Node]]:
     """

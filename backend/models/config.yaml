@@ -1,0 +1,17 @@
+# YOLO Model Configuration for P&ID Symbols
+model_path: "yolov5s.pt"
+confidence_threshold: 0.5
+iou_threshold: 0.45
+
+# Symbol classes (ISA-5.1)
+symbol_classes:
+  - pump
+  - valve_manual
+  - valve_control
+  - instrument_bubble
+  - tank
+  - heat_exchanger
+  - compressor
+  - filter
+  - separator
+  - reactor

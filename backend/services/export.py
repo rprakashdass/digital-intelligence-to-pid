@@ -1,4 +1,4 @@
-from ..models import Graph, DexpiExport, DexpiEquipment, DexpiInstrument, DexpiLine, DexpiConnection
+from backend.models import Graph, DexpiExport, DexpiEquipment, DexpiInstrument, DexpiLine, DexpiConnection
 import json
 import pandas as pd
 

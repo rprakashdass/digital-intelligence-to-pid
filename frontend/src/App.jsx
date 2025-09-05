@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import ControlPanel from './components/ControlPanel';
 import Viewer from './components/Viewer';
 import ResultsPanel from './components/ResultsPanel';
-import { uploadImage, runValidation, runOCR, runGraph, runExport } from './services/api';
+import RAGPanel from './components/RAGPanel';
+import { uploadImage, uploadVideo, runValidation, runOCR, runGraph, runExport } from './services/api';
 // import './App.css';
 
 function App() {
   const [image, setImage] = useState(null);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('viewer'); // viewer or results
+  const [activeTab, setActiveTab] = useState('viewer'); // viewer, results, or rag
   const [graphData, setGraphData] = useState(null);
   const [analysisType, setAnalysisType] = useState(null); // To track what type of analysis was performed
+  const [currentImageId, setCurrentImageId] = useState(null); // Track current image ID for RAG queries
 
   const handleImageUpload = async (file) => {
     setLoading(true);
@@ -19,11 +21,30 @@ function App() {
     setGraphData(null); // Clear previous graph data
     setAnalysisType(null); // Reset analysis type
     try {
-      await uploadImage(file);
+      const response = await uploadImage(file);
       setImage(URL.createObjectURL(file));
+      setCurrentImageId(response.image_id); // Store image ID for RAG queries
       setActiveTab('viewer');
     } catch (error) {
       console.error("Error uploading image:", error);
+    }
+    setLoading(false);
+  };
+
+  const handleVideoUpload = async (file) => {
+    setLoading(true);
+    setResults(null);
+    setGraphData(null);
+    setAnalysisType(null);
+    try {
+      const response = await uploadVideo(file);
+      if (response.frame_extracted) {
+        setImage(URL.createObjectURL(file)); // Show video thumbnail
+        setCurrentImageId(response.video_id); // Use video ID for RAG queries
+        setActiveTab('viewer');
+      }
+    } catch (error) {
+      console.error("Error uploading video:", error);
     }
     setLoading(false);
   };
@@ -63,6 +84,11 @@ function App() {
         default:
           break;
       }
+      
+      if (!data) {
+        throw new Error("No data returned from API");
+      }
+      
       setResults(data);
       setAnalysisType(type);
       
@@ -72,8 +98,11 @@ function App() {
       }
     } catch (error) {
       console.error(`Error running ${type}:`, error);
+      // Add error display for user
+      alert(`Error running ${type} analysis: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -98,17 +127,12 @@ function App() {
             >
               Analysis Results {results && `(${analysisType})`}
             </button>
-            
-            {/* Add a Run Analysis button directly in the tab bar for convenience */}
-            {activeTab === 'viewer' && !graphData && (
-              <button
-                onClick={() => handleRun('graph')}
-                disabled={loading || !image}
-                className="ml-auto px-3 py-1 mr-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-              >
-                {loading ? "Analyzing..." : "Run Analysis"}
-              </button>
-            )}
+            <button 
+              onClick={() => setActiveTab('rag')} 
+              className={`px-4 py-2 -mb-px border-b-2 ${activeTab === 'rag' ? 'border-blue-500 text-blue-400' : 'border-transparent text-gray-400 hover:text-white'}`}
+            >
+              Smart Q&A
+            </button>
           </div>
         )}
         
@@ -119,13 +143,21 @@ function App() {
               loading={loading} 
               graphData={graphData} 
             />
-          ) : (
+          ) : activeTab === 'results' ? (
             <ResultsPanel 
               results={results} 
               loading={loading} 
               analysisType={analysisType}
               onViewerClick={() => setActiveTab('viewer')}
             />
+          ) : (
+            <div className="p-4">
+              <RAGPanel 
+                imageId={currentImageId}
+                onVideoUpload={handleVideoUpload}
+                loading={loading}
+              />
+            </div>
           )}
         </div>
       </main>

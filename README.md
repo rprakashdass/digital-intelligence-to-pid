@@ -1,133 +1,327 @@
-# P&ID to Digital MVP
+# P&ID Analyzer
 
-This project is a minimal, working P&ID-to-digital converter built as part of a hackathon. It uses a React frontend and a Python FastAPI backend to perform OCR, symbol detection, and graph construction from a P&ID image.
+<div align="center">
 
-This MVP is designed specifically for oil & gas and chemical process P&ID diagrams using ISA-5.1 core symbols. Expand the template set as needed for new diagrams.
+```
+    ____  ____     __________    ___                __                     
+   / __ \/ __ \   /  _/ __ \ \  / / | _____  ___ _/ /_ __________
+  / /_/ / /_/ /   / // / / /\ \/ /| |/ / _ \/ _ `/ / // / __/ -_)
+ / ____/ ____/  _/ // /_/ /  \  / |   /  __/ /_/ / \_,_/_/  \__/ 
+/_/   /_/      /___/_____/    \/ /___/\___/\__,_/_/___/      
+                                                                
+ AI-Powered P&ID Analysis & Intelligence Platform
+```
 
-## Features (MVP)
+**Transform static diagrams into intelligent, interactive assets**
 
-- **Image Upload**: Upload a P&ID as a PNG or JPG.
-- **OCR**: Extracts text using `pytesseract`.
-- **Symbol Detection**: Simple template matching for ISA-5.1 standard symbols (limited to pump, manual valve, control valve, instrument bubble, and tank/vessel).
-- **Line Extraction**: Detects straight lines using OpenCV.
-- **Graph Construction**: Builds a basic process graph of nodes and edges.
-- **ISA Tag Parsing**: Parses instrument tags like `FIC-101`.
-- **Issue Detection**: Flags potential problems like missing labels, dangling lines, or unknown symbols.
-- **DEXPI-lite Export**: Exports the graph to a simplified JSON format.
-- **Simple UI**: View the original image, toggle overlays, and review extracted data.
+[Quick Start](#-quick-start) • 
+[Features](#-key-features) • 
+[Documentation](#-documentation) • 
+[Architecture](#-architecture) • 
+[Contributing](#-contributing)
 
-## Currently Supported Symbols
+</div>
 
-The MVP focuses specifically on these ISA-5.1 standard symbols:
+This AI-driven platform transforms Piping and Instrumentation Diagrams (P&IDs) into structured, machine-readable datasets. Built with modern deep learning and computer vision techniques, it provides robust symbol detection, OCR, and process flow mapping compliant with ISA-5.1 and ISO standards.
 
-1. Pump
-2. Manual valve
-3. Control valve
-4. Instrument bubble
-5. Tank/vessel
+## 🚀 Key Features
 
-All other shapes will be flagged as "Unknown Symbol" in the issues array for user review.
+- **AI-Powered Symbol Detection**: YOLO-based deep learning for robust ISA-5.1 symbol recognition
+- **Advanced OCR**: Tesseract-based text extraction with natural language processing
+- **Process Flow Mapping**: Intelligent line detection and junction identification
+- **ISA Tag Parsing**: Automated parsing of instrument tags (e.g., FIC-101, PSV-201)
+- **🤖 Smart Q&A (RAG)**: Natural language queries about P&ID diagrams with intelligent responses
+- **📹 Video Support**: Upload and analyze P&ID videos with automatic frame extraction
+- **🧠 Knowledge Base**: 50+ ISA-5.1 instrument tags and process equipment definitions
+- **Industry Standards Compliance**: DEXPI-lite export format with ISO 15926 mapping support
+- **Quality Validation**: Comprehensive issue detection and reporting
+- **Modern Web Interface**: React-based UI with real-time visualization overlays
+- **Flexible Export**: JSON, CSV, and DEXPI-lite formats for downstream integration
 
-## Project Structure
+## 🏗️ Architecture
 
-- `backend/`: FastAPI application.
-  - `main.py`: API endpoints (`/ingest`, `/analyze`, `/export`).
-  - `models.py`: Pydantic data models.
-  - `services/`: Core logic for OCR, symbol/line detection, etc.
-- `frontend/`: Vanilla HTML, CSS, and JavaScript frontend.
-  - `index.html`: The main UI.
-  - `app.js`: Frontend logic for interacting with the backend.
-- `data/`:
-  - `templates/`: PNG images for symbol template matching.
-  - `samples/`: Sample P&ID images for testing.
-- `README.md`: This file.
-- `Makefile`: Helper commands for setup and execution.
+```
+                             P&ID Analyzer Architecture
+                          ============================
 
-## Setup and Running
+┌───────────────────────────────────────────────────────────────────┐
+│                         Client Applications                        │
+│                                                                   │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌──────────┐
+│  │ React Web UI│   │Mobile Client│   │ CLI Tool    │   │3rd Party │
+│  │             │   │(Future)     │   │(Future)     │   │Integration│
+│  └─────────────┘   └─────────────┘   └─────────────┘   └──────────┘
+└───────────────────────────────────────────────────────────────────┘
+                                  ▲
+                                  │
+                                  ▼
+┌───────────────────────────────────────────────────────────────────┐
+│                           API Layer (FastAPI)                      │
+│                                                                   │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌──────────┐
+│  │ Upload API  │   │ Analysis API│   │ Query API   │   │Export API│
+│  │             │   │             │   │             │   │          │
+│  └─────────────┘   └─────────────┘   └─────────────┘   └──────────┘
+└───────────────────────────────────────────────────────────────────┘
+                                  ▲
+                                  │
+                                  ▼
+┌───────────────────────────────────────────────────────────────────┐
+│                       Core Analysis Pipeline                       │
+│                                                                   │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   ┌──────────┐
+│  │ Symbol      │   │ Text        │   │ Line        │   │Graph     │
+│  │ Detection   │   │ Extraction  │   │ Detection   │   │Builder   │
+│  │ ┌─────────┐ │   │ ┌─────────┐ │   │ ┌─────────┐ │   │┌────────┐│
+│  │ │  YOLO   │ │   │ │ OCR     │ │   │ │OpenCV   │ │   ││Tagging ││
+│  │ │         │ │   │ │         │ │   │ │         │ │   ││        ││
+│  │ └─────────┘ │   │ └─────────┘ │   │ └─────────┘ │   │└────────┘│
+│  └─────────────┘   └─────────────┘   └─────────────┘   └──────────┘
+└───────────────────────────────────────────────────────────────────┘
+```
+
+### Backend (FastAPI + AI)
+- **Symbol Detection**: YOLO deep learning models with template matching fallback
+- **Computer Vision**: OpenCV for line detection, contour analysis, and image processing
+- **OCR Pipeline**: Tesseract with text association and validation
+- **Graph Construction**: Intelligent process flow mapping with junction detection
+- **RAG System**: Retrieval-Augmented Generation with knowledge base and LLM integration
+- **Video Processing**: Frame extraction and quality assessment for video uploads
+- **Export Engine**: Multi-format export with industry-standard compliance
+
+### Frontend (React + Tailwind)
+- **Interactive Viewer**: Toggle-able overlays for symbols, lines, and text
+- **Results Dashboard**: Tabbed interface for comprehensive analysis review
+- **Smart Q&A Panel**: Natural language query interface with intelligent responses
+- **Video Upload**: Support for video file uploads with frame extraction
+- **Export Controls**: One-click export to various formats
+- **Responsive Design**: Modern UI optimized for engineering workflows
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Python 3.8+ and `pip`
-- A virtual environment tool (`venv`)
-- Tesseract OCR engine installed and in your system's PATH.
-  - **Windows**: Download from the official Tesseract repository.
-  - **macOS**: `brew install tesseract`
-  - **Linux**: `sudo apt-get install tesseract-ocr`
+- Python 3.8+ and pip
+- Tesseract OCR engine
+- Node.js and npm (for frontend)
+- GPU recommended for YOLO inference (CUDA compatible)
 
 ### Installation
 
-1.  **Clone the repository and create a virtual environment:**
-    ```bash
-    git clone <repo-url>
-    cd <repo-name>
-    python -m venv .venv
-    ```
+1. **Clone and setup environment:**
+```bash
+git clone <repo-url>
+cd <repo-name>
+```
 
-2.  **Activate the virtual environment:**
-    -   **Windows (cmd.exe):**
-        ```
-        .venv\Scripts\activate.bat
-        ```
-    -   **PowerShell:**
-        ```
-        .venv\Scripts\Activate.ps1
-        ```
-    -   **macOS/Linux:**
-        ```
-        source .venv/bin/activate
-        ```
+2. **Run the startup script:**
+```bash
+# Windows
+start_dev.bat
 
-3.  **Install Python dependencies:**
-    ```bash
-    pip install -r backend/requirements.txt
-    ```
+# Linux/Mac
+./start_dev.sh
+```
 
-### Running the Application
+3. **Alternative manual setup:**
+```bash
+# Install backend dependencies
+pip install torch torchvision ultralytics fastapi uvicorn sentence-transformers openai
 
-1.  **Start the backend server:**
-    ```bash
-    uvicorn backend.main:app --reload --port 8000
-    ```
-    The server will be running at `http://localhost:8000`.
+# Setup YOLO model
+python backend/initialize_yolo.py
 
-2.  **Open the frontend:**
-    Open the `frontend/index.html` file directly in your web browser.
+# Start backend server
+python -m uvicorn backend.main:app --reload --port 8000
 
-    > **Note:** The application is configured with CORS to allow `file://` origins for local development, so you don't need a separate frontend server.
+# In another terminal, start frontend
+cd frontend
+npm install
+npm run dev
+```
 
-## How to Use
+4. **Access the application:**
+- Backend API: http://localhost:8000
+- Frontend UI: http://localhost:5173
 
-1.  Open `frontend/index.html` in your browser.
-2.  Click "Choose File" and select a P&ID image from the `data/samples` folder or your own.
-3.  The image will be displayed in the viewer.
-4.  Click the "Analyze" button.
-5.  After a few moments, the tables on the right will populate with extracted objects, lines, and any identified issues.
-6.  Use the "Toggle Overlays" checkboxes to view the detected symbols and lines on the image.
-7.  Click "Export DEXPI-lite JSON" or "Export CSVs" to download the results.
+## 🤖 YOLO Integration
 
-## Limitations and Next Steps
+### Why YOLO?
+- **Better Accuracy**: Deep learning vs. template matching
+- **Robustness**: Handles drawing style variations, rotations, scales
+- **Extensibility**: Easy to add new symbols through training
+- **Performance**: GPU acceleration for real-time processing
 
-This is a hackathon MVP and has several limitations:
+### Model Management
+```bash
+# Load custom trained model
+curl -X POST "http://localhost:8000/models/load" \
+     -H "Content-Type: application/json" \
+     -d '{"model_path": "models/pid_symbols.pt", "conf_threshold": 0.6}'
 
--   **Focused Symbol Library**: Only recognizes 5 core ISA-5.1 symbols (pump, manual valve, control valve, instrument bubble, tank/vessel).
--   **Straight Lines Only**: Does not detect curved pipes.
--   **Basic Text Association**: Associates text based on simple proximity, which can be inaccurate.
--   **No CAD Import**: Only works with raster images.
--   **Single-Page Only**: Does not process multi-page documents.
+# Check model status
+curl "http://localhost:8000/models/info"
+```
 
-### Future Improvements
+### Training Your Own Model
+1. **Prepare dataset** in YOLO format
+2. **Train model** using ultralytics
+3. **Deploy** via API endpoint
+4. **Monitor** performance and retrain as needed
 
--   **ML-based Symbol Detection**: Replace template matching with a more robust machine learning model (e.g., YOLO).
--   **Improved Line Merging**: Implement more sophisticated algorithms to connect broken line segments.
--   **DEXPI/ISO 15926 Mapping**: Create a proper mapping from detected symbols to standard industry classes.
--   **Support for Curved Pipes**: Use contour detection or other CV techniques.
--   **Interactive Correction**: Allow users to correct misidentifications in the UI.
--   **Expanded Symbol Library**: Add support for more ISA-5.1 symbols beyond the initial set.
+See [YOLO_INTEGRATION.md](YOLO_INTEGRATION.md) for detailed training instructions.
 
-## Test Resources
+## 🤖 Smart Q&A (RAG) System
 
-For testing and extending this application, you can use publicly available P&ID diagrams and symbol libraries:
+### Natural Language Queries
+Ask questions about your P&ID diagrams in plain English:
 
-1. ISA-5.1 Standard Symbol Libraries
-2. Sample P&ID diagrams from educational resources
-3. Open-source engineering diagrams (ensure proper licensing)
+```bash
+# Example queries
+"What does FIC-101 do?"
+"Explain the function of the pump in this diagram"
+"What safety systems are present?"
+"Are there any issues with this P&ID?"
+```
+
+### Video Support
+Upload video files (MP4, AVI, MOV, MKV, WebM, GIF) for analysis:
+
+```bash
+# Upload video and extract best frame
+curl -X POST "http://localhost:8000/upload/video" \
+     -F "file=@pid_video.mp4"
+
+# Ask questions about the extracted frame
+curl -X POST "http://localhost:8000/query" \
+     -H "Content-Type: application/json" \
+     -d '{"image_id": "video_id", "query": "What does FIC-101 do?"}'
+```
+
+### Knowledge Base
+The system includes a comprehensive knowledge base with:
+- **50+ ISA-5.1 instrument tags** (FIC, PIC, TIC, LIC, etc.)
+- **Process equipment definitions** (pumps, valves, tanks, heat exchangers)
+- **Control logic explanations** (flow control, pressure control, level control)
+- **Safety systems** (pressure relief, emergency shutdown)
+- **Common issues** (missing tags, broken lines, unknown symbols)
+
+### Demo Test
+Run the RAG test suite to see it in action:
+
+```bash
+cd backend
+python test_rag.py
+```
+
+See [RAG_DOCUMENTATION.md](RAG_DOCUMENTATION.md) for comprehensive RAG system documentation.
+
+## 📊 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/upload` | POST | Upload P&ID image |
+| `/upload/video` | POST | Upload P&ID video |
+| `/analyze` | POST | Run complete analysis |
+| `/run/{type}` | POST | Run specific analysis (validate/ocr/graph) |
+| `/export` | POST | Export results (JSON/CSV) |
+| `/query` | POST | RAG query processing |
+| `/models/load` | POST | Load custom YOLO model |
+| `/models/info` | GET | Get model information |
+| `/knowledge-base/info` | GET | Get knowledge base statistics |
+
+## 🔍 Analysis Pipeline
+
+1. **Image/Video Preprocessing**: PDF rasterization, format conversion, frame extraction
+2. **Symbol Detection**: YOLO inference with confidence scoring
+3. **Line Extraction**: Hough transform with junction identification
+4. **OCR Processing**: Text extraction and symbol association
+5. **Graph Assembly**: Process flow construction and validation
+6. **Issue Detection**: Quality checks and problem flagging
+7. **RAG Processing**: Knowledge base retrieval and query answering
+8. **Export Generation**: Structured output in multiple formats
+
+## 📈 Export Formats
+
+### DEXPI-lite JSON
+Industry-standard format with equipment, instruments, connections, and metadata.
+
+### CSV Export
+Separate files for nodes, edges, and issues with comprehensive attributes.
+
+### ISO 15926 Ready
+Optional mapping to ISO 15926 classes for enterprise integration.
+
+## 🎯 Use Cases
+
+- **Engineering Documentation**: Convert legacy P&IDs to digital format
+- **Process Analysis**: Extract process flow for simulation and analysis
+- **Asset Management**: Create equipment inventories from diagrams
+- **Compliance**: Validate diagrams against industry standards
+- **Training**: Generate structured data for operator training systems
+
+## 🔧 Configuration
+
+### YOLO Model Settings
+Edit `models/config.yaml`:
+```yaml
+model_path: "your_model.pt"
+confidence_threshold: 0.5
+symbol_classes: [pump, valve_manual, instrument_bubble, ...]
+```
+
+### Analysis Parameters
+- Confidence thresholds for symbol detection
+- OCR preprocessing options
+- Line detection sensitivity
+- Validation rule sets
+
+## 🚧 Current Limitations
+
+- **Curved Pipes**: Limited to straight line detection
+- **Multi-page**: Single page processing only
+- **Symbol Rotation**: Basic rotation handling
+- **Text Association**: Proximity-based linking
+
+## 🚀 Roadmap
+
+- [ ] **Curved Pipe Detection**: Spline fitting and contour analysis
+- [ ] **Multi-page Support**: Batch processing for large documents
+- [ ] **Real-time Processing**: Stream processing for live diagrams
+- [ ] **Advanced OCR**: Layout-aware text extraction
+- [ ] **3D Support**: Z-axis information extraction
+- [ ] **Cloud Deployment**: Scalable cloud infrastructure
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch
+3. Implement improvements
+4. Add tests and documentation
+5. Submit pull request
+
+## 📚 Documentation
+
+### User Guides
+- [Quick Start Guide](docs/guides/quickstart.md)
+- [User Guide](docs/guides/user_guide.md)
+- [Developer Guide](docs/guides/developer_guide.md)
+
+### API Reference
+- [API Overview](docs/api/api_reference.md)
+- [Query API](docs/api/query_api.md)
+- [Analysis API](docs/api/analysis_api.md)
+
+### Technical Documentation
+- [System Architecture](docs/architecture/system_overview.md)
+- [AI/ML Architecture](docs/architecture/ai_ml_architecture.md)
+- [RAG Documentation](RAG_DOCUMENTATION.md)
+- [YOLO Integration](YOLO_INTEGRATION.md)
+- [Troubleshooting](TROUBLESHOOTING.md)
+
+## 📄 License
+
+This project is developed for educational and research purposes. Please ensure compliance with relevant licenses when using third-party models or datasets.
+
+---
+
+**Built with ❤️ for the Industrial AI community**

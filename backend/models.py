@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Tuple, Dict, Any
 
 class BoundingBox(BaseModel):
@@ -13,7 +13,7 @@ class Node(BaseModel):
     type: Optional[str] = None
     bbox: BoundingBox
     tag: Optional[str] = None
-    attributes: Dict[str, Any] = {}
+    attributes: Dict[str, Any] = Field(default_factory=dict)
     confidence: Optional[float] = None
 
 class Edge(BaseModel):
@@ -23,7 +23,7 @@ class Edge(BaseModel):
     direction: str = "unknown"  # "unknown", "a->b", "b->a"
     endpoints: Tuple[Optional[str], Optional[str]] # (nodeIdA, nodeIdB)
     label: Optional[str] = None
-    attributes: Dict[str, Any] = {}
+    attributes: Dict[str, Any] = Field(default_factory=dict)
     confidence: Optional[float] = None
 
 class InstrumentTag(BaseModel):
@@ -45,10 +45,10 @@ class Text(BaseModel):
     bbox: BoundingBox
 
 class Graph(BaseModel):
-    nodes: List[Node] = []
-    edges: List[Edge] = []
-    issues: List[Issue] = []
-    texts: List[Text] = []
+    nodes: List[Node] = Field(default_factory=list)
+    edges: List[Edge] = Field(default_factory=list)
+    issues: List[Issue] = Field(default_factory=list)
+    texts: List[Text] = Field(default_factory=list)
 
 # --- DEXPI-lite Export Schemas ---
 
@@ -75,8 +75,8 @@ class DexpiConnection(BaseModel):
     line_id: str
 
 class DexpiExport(BaseModel):
-    equipment: List[DexpiEquipment] = []
-    instruments: List[DexpiInstrument] = []
-    lines: List[DexpiLine] = []
-    connections: List[DexpiConnection] = []
-    issues: List[Issue] = []
+    equipment: List[DexpiEquipment] = Field(default_factory=list)
+    instruments: List[DexpiInstrument] = Field(default_factory=list)
+    lines: List[DexpiLine] = Field(default_factory=list)
+    connections: List[DexpiConnection] = Field(default_factory=list)
+    issues: List[Issue] = Field(default_factory=list)

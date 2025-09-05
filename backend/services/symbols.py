@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 from typing import List, Tuple, Dict, Any
-from ..models import Node, BoundingBox, Issue
+from backend.models import Node, BoundingBox, Issue
 import uuid
 
 # --- Globals for Template Matching ---

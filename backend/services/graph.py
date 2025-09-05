@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from ..models import Graph, Node, Edge, Text, BoundingBox
+from backend.models import Graph, Node, Edge, Text, BoundingBox
 import numpy as np
 
 def get_bbox_center(bbox: BoundingBox) -> Tuple[float, float]:

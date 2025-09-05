@@ -1,5 +1,5 @@
 from typing import List
-from ..models import Graph, Issue
+from backend.models import Graph, Issue
 
 def validate_graph(graph: Graph) -> List[Issue]:
     """

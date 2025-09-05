@@ -1,6 +1,6 @@
 import re
 from typing import Optional
-from ..models import InstrumentTag
+from backend.models import InstrumentTag
 
 # Regex to parse ISA-style tags. Examples: FIC-101, PSHH-12, T-23A
 # - Group 1: Loop letters (e.g., FIC, P, T)
